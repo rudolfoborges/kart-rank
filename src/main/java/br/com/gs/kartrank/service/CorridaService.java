@@ -103,6 +103,7 @@ public class CorridaService {
 
 	carregarListaDePilotos()
 		.forEach(piloto -> {
+		    System.out.println("processando piloto" + piloto.getNome());
         	    Resultado resultado = new Resultado();
         	    resultado.setPiloto(piloto);
         	    resultado.setNumeroDaMelhorVolta(melhorVoltaPorPiloto(piloto));
