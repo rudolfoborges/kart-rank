@@ -65,6 +65,9 @@ public class CorridaService {
     }
 
     public int melhorVoltaPorPiloto(Piloto piloto) {
+	if(piloto == null) {
+	    System.out.println("piloto null");
+	}
 	List<CorridaLog> list = carregarLogsPorPiloto(piloto).stream()
 		.filter(x -> x.getTempoVolta().toNanoOfDay() == menorTempoDeVoltaPorPiloto(piloto).toNanoOfDay())
 		.collect(Collectors.toList());
