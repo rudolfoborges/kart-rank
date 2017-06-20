@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8"></meta>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no"></meta>
+<meta name="description" content=""></meta>
+<meta name="author" content=""></meta>
+
+<title>Kart Rank</title>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+	integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+	crossorigin="anonymous"></link>
+
+<!-- Custom styles for this template -->
+<link href="css/logo-nav.css" rel="stylesheet"></link>
+
+<!-- Temporary navbar container fix -->
+<style>
+.navbar-toggler {
+	z-index: 1;
+}
+
+@media ( max-width : 576px) {
+	nav>.container {
+		width: 100%;
+	}
+}
+</style>
+
+</head>
+
+<body>
+
+	<nav
+		class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse">
+		<div class="container">
+			<a class="navbar-brand" href="#"> <span>Kart Rank</span>
+			</a>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<h2 class="mt-5">Resultado da Corrida</h2>
+		
+		<br/>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Código</th>
+					<th>Nome</th>
+					<th>Voltas</th>
+					<th>Tempo Total da Prova</th>
+					<th>Nº da Melhor Volta</th>
+					<th>Velocidade Média</th>
+					<th>Diferença do Primeiro</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="resultado, iter : ${resultados}">
+					<td th:text="${iter.index + 1}"></td>
+					<td th:text="${resultado.piloto.numero}"></td>
+					<td th:text="${resultado.piloto.nome}"></td>
+					<td th:text="${resultado.quantidadeVoltasCompletadas}"></td>
+					<td th:text="${resultado.tempoTotal}"></td>
+					<td th:text="${resultado.numeroDaMelhorVolta}"></td>
+					<td
+						th:text="${#numbers.formatDecimal(resultado.velocidadeMedia,2,2,'COMMA')}"></td>
+					<td th:text="${resultado.diferencaDeTempoEntreVencedor}"></td>
+				</tr>
+				<tr>
+
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="9"
+						th:text="'Melhor Volta da corrida: ' + ${melhorVoltaCorrida.piloto.nome} + ' - ' + ${melhorVoltaCorrida.tempoVolta}"></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</body>
+
+</html>
