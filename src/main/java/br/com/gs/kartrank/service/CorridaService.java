@@ -65,15 +65,12 @@ public class CorridaService {
     }
 
     public int melhorVoltaPorPiloto(Piloto piloto) {
-	List<CorridaLog> list = carregarLogsPorPiloto(piloto).stream()
+	return carregarLogsPorPiloto(piloto).stream()
 		.filter(x -> x.getTempoVolta().toNanoOfDay() == menorTempoDeVoltaPorPiloto(piloto).toNanoOfDay())
-		.collect(Collectors.toList());
+		.mapToInt(x -> x.getNumeroVolta())
+		.findFirst() 
+		.orElse(0);
 		
-	if(list.size() == 0) {
-	    return 0;
-	}
-	
-	return list.get(0).getNumeroVolta();
     }
 
     public double velocidadeMediaPorPiloto(Piloto piloto) {
@@ -90,8 +87,8 @@ public class CorridaService {
 	
 	 return logs.stream()
 		 .sorted((p1, p2) -> p1.getTempoVolta().compareTo(p2.getTempoVolta()))
-		 .collect(Collectors.toList())
-		 .get(0);
+		 .findFirst()
+		 .orElse(null);
     }
 
     private List<Resultado> processarDados() {
@@ -120,7 +117,7 @@ public class CorridaService {
 
 	resultado.forEach(p -> {
 	    p.setDiferencaDeTempoEntreVencedor(
-		    subtrairDatas(p.getTempoTotal(), resultado.get(0).getTempoTotal()));
+		    subtrairDatas(p.getTempoTotal(), resultado.stream().findFirst().get().getTempoTotal()));
 	});
 
 	return resultado;
