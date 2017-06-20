@@ -65,9 +65,6 @@ public class CorridaService {
     }
 
     public int melhorVoltaPorPiloto(Piloto piloto) {
-	if(piloto == null) {
-	    System.out.println("piloto null");
-	}
 	List<CorridaLog> list = carregarLogsPorPiloto(piloto).stream()
 		.filter(x -> x.getTempoVolta().toNanoOfDay() == menorTempoDeVoltaPorPiloto(piloto).toNanoOfDay())
 		.collect(Collectors.toList());
@@ -103,7 +100,6 @@ public class CorridaService {
 
 	carregarListaDePilotos()
 		.forEach(piloto -> {
-		    System.out.println("processando piloto" + piloto.getNome());
         	    Resultado resultado = new Resultado();
         	    resultado.setPiloto(piloto);
         	    resultado.setNumeroDaMelhorVolta(melhorVoltaPorPiloto(piloto));
@@ -153,7 +149,7 @@ public class CorridaService {
 	file.forEach(l -> {
 	    logs.add(new CorridaLog.Builder(l).build());
 	});
-	System.out.println("TAMANHO DO LOGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG " + logs.size());
+	
 	return logs;
 
     }

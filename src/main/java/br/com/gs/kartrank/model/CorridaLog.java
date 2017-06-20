@@ -81,7 +81,7 @@ public class CorridaLog {
 	    }
 
 	    try {
-		String[] obj = linha.replace("–", " ").replaceAll("\\s+", " ").split(" ");
+		String[] obj = linha.replace("\u2013", " ").replaceAll("\\s+", " ").split(" ");
 
 		this.hora = LocalTime.parse(obj[0]);
 		this.piloto = new Piloto(Integer.parseInt(obj[1]), obj[2]);
