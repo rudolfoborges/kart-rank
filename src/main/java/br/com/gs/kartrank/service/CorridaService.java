@@ -153,7 +153,7 @@ public class CorridaService {
 	file.forEach(l -> {
 	    logs.add(new CorridaLog.Builder(l).build());
 	});
-	
+	System.out.println("TAMANHO DO LOGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG " + logs.size());
 	return logs;
 
     }
