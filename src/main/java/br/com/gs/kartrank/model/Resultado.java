@@ -13,6 +13,8 @@ public class Resultado {
     private int numeroDaMelhorVolta;
 
     private double velocidadeMedia;
+    
+    private LocalTime horaChegada;
 
     private LocalTime diferencaDeTempoEntreVencedor;
 
@@ -57,6 +59,14 @@ public class Resultado {
 
     public void setVelocidadeMedia(double velocidadeMedia) {
 	this.velocidadeMedia = velocidadeMedia;
+    }
+
+    public LocalTime getHoraChegada() {
+        return horaChegada;
+    }
+
+    public void setHoraChegada(LocalTime horaChegada) {
+        this.horaChegada = horaChegada;
     }
 
     public LocalTime getDiferencaDeTempoEntreVencedor() {

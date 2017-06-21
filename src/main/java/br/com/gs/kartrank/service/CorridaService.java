@@ -118,6 +118,16 @@ public class CorridaService {
 
     }
     
+    public LocalTime horaChegadaDaUltimaVoltaPorPiloto(Piloto piloto) {
+	
+	long horaChegadaNano =  carregarLogsPorPiloto(piloto).stream()
+		.mapToLong(x -> x.getHora().toNanoOfDay())
+		.max().orElse(0L);
+	
+	return LocalTime.ofNanoOfDay(horaChegadaNano);
+	
+    }
+    
     private List<Resultado> processarDados() {
 
    	List<Resultado> list = new ArrayList<Resultado>();
@@ -130,6 +140,7 @@ public class CorridaService {
            	    resultado.setQuantidadeVoltasCompletadas(voltasCompletadasPorPiloto(piloto));
            	    resultado.setTempoTotal(tempoTotalDeProvaPorPiloto(piloto));
            	    resultado.setVelocidadeMedia(velocidadeMediaPorPiloto(piloto));
+           	    resultado.setHoraChegada(horaChegadaDaUltimaVoltaPorPiloto(piloto));
            	    list.add(resultado);
    		});
 
@@ -145,8 +156,8 @@ public class CorridaService {
 
    	resultado.forEach(p -> {
    	    p.setDiferencaDeTempoEntreVencedor(
-   		    subtrairDatas(p.getTempoTotal(), resultado.stream()
-   			    .findFirst().get().getTempoTotal()));
+   		    subtrairDatas(p.getHoraChegada(), resultado.stream()
+   			    .findFirst().get().getHoraChegada()));
    	});
 
    	return resultado;

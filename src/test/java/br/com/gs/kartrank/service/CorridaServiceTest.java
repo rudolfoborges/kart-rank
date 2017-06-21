@@ -174,6 +174,27 @@ public class CorridaServiceTest {
 	assertEquals(pilotoEsperado, resultado.getPiloto());
 	assertEquals(tempoEsperado, resultado.getTempoVolta());
     }
+    
+    @Test
+    public void horaChegadaDaUltimaVoltaPorPiloto() {
+	Piloto piloto = new Piloto(38, "F.MASSA");
+	LocalTime resultado = corridaService.horaChegadaDaUltimaVoltaPorPiloto(piloto);
+	LocalTime horaChegadaFMassa = LocalTime.parse("23:52:17.003");
+	assertEquals(horaChegadaFMassa, resultado);
+    }
+    
+    @Test
+    public void horaChegadaDaUltimaVoltaPorPilotoDesconhecido() {
+	Piloto piloto = new Piloto(1000, "Piloto Desconhecido");
+	LocalTime resultado = corridaService.horaChegadaDaUltimaVoltaPorPiloto(piloto);
+	LocalTime resultadoEsperado =  LocalTime.parse("00:00");
+	assertEquals(resultadoEsperado, resultado);
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void horaChegadaDaUltimaVoltaPorPilotoNulo() {
+	corridaService.horaChegadaDaUltimaVoltaPorPiloto(null);
+    }
 
     @Test
     public void carregarDadosDaCorrida() throws IOException {
