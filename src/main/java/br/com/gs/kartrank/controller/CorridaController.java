@@ -13,21 +13,23 @@ import br.com.gs.kartrank.service.CorridaService;
 @Controller
 @RequestMapping("/")
 public class CorridaController {
-    
+
     private CorridaService corridaService;
-    
+
     public CorridaController(CorridaService corridaService) {
 	this.corridaService = corridaService;
     }
-    
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String resultado(Model model) {
-          List<Resultado> resultados = corridaService.gerarResultado();
-          if (!resultados.isEmpty()) {
-                model.addAttribute("resultados", resultados);
-                model.addAttribute("melhorVoltaCorrida", corridaService.melhorVoltaDaCorrida());
-          }
-          return "resultado";
+    public String gerarResultado(Model model) {
+
+	List<Resultado> resultados = corridaService.gerarResultado();
+
+	if (!resultados.isEmpty()) {
+	    model.addAttribute("resultados", resultados);
+	    model.addAttribute("melhorVoltaCorrida", corridaService.melhorVoltaDaCorrida());
+	}
+	return "resultado";
     }
 
 }

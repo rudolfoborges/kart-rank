@@ -177,7 +177,7 @@ public class CorridaServiceTest {
 
     @Test
     public void carregarDadosDaCorrida() throws IOException {
-	List<CorridaLog> logs = corridaService.carregarDadosDaCorrida(CorridaService.CAMINHO_DO_LOG);
+	List<CorridaLog> logs = corridaService.carregarDadosDaCorrida(CorridaService.ARQUIVO_LOG);
 	int numeroEsperadoDeLinhasDoLog = 23;
 
 	assertEquals(numeroEsperadoDeLinhasDoLog, logs.size());
@@ -203,7 +203,7 @@ public class CorridaServiceTest {
 	int numeroEsperadoDoUltimoLugar = 11;
 
 	assertEquals(tamanhoEsperadoDaLista, resultado.size());
-	assertEquals(numeroEsperadoDoVencedor, resultado.get(0).getPiloto().getNumero());
+	assertEquals(numeroEsperadoDoVencedor, resultado.stream().findFirst().get().getPiloto().getNumero());
 	assertEquals(numeroEsperadoDoUltimoLugar, resultado.get(5).getPiloto().getNumero());
     }
 

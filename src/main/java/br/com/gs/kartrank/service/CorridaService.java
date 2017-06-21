@@ -19,13 +19,13 @@ import br.com.gs.kartrank.model.Resultado;
 @Component
 public class CorridaService {
 
-    public static final String CAMINHO_DO_LOG = "src/main/resources/log.txt";
+    public static final String ARQUIVO_LOG = "src/main/resources/log.txt";
     
     private List<CorridaLog> logs = new ArrayList<CorridaLog>();
     
 
     public CorridaService() {
-	logs = carregarDadosDaCorrida(CAMINHO_DO_LOG);
+	logs = carregarDadosDaCorrida(ARQUIVO_LOG);
     }
 
     public List<Piloto> carregarListaDePilotos() {
@@ -91,39 +91,6 @@ public class CorridaService {
 		 .orElse(null);
     }
 
-    private List<Resultado> processarDados() {
-
-	List<Resultado> list = new ArrayList<Resultado>();
-
-	carregarListaDePilotos()
-		.forEach(piloto -> {
-        	    Resultado resultado = new Resultado();
-        	    resultado.setPiloto(piloto);
-        	    resultado.setNumeroDaMelhorVolta(melhorVoltaPorPiloto(piloto));
-        	    resultado.setQuantidadeVoltasCompletadas(voltasCompletadasPorPiloto(piloto));
-        	    resultado.setTempoTotal(tempoTotalDeProvaPorPiloto(piloto));
-        	    resultado.setVelocidadeMedia(velocidadeMediaPorPiloto(piloto));
-        	    list.add(resultado);
-		});
-
-	return list;
-
-    }
-
-    public List<Resultado> gerarResultado() {
-
-	List<Resultado> resultado = processarDados().stream()
-		.sorted((p1, p2) -> p1.getTempoTotal().compareTo(p2.getTempoTotal())).collect(Collectors.toList());
-
-	resultado.forEach(p -> {
-	    p.setDiferencaDeTempoEntreVencedor(
-		    subtrairDatas(p.getTempoTotal(), resultado.stream().findFirst().get().getTempoTotal()));
-	});
-
-	return resultado;
-
-    }
-
     private LocalTime subtrairDatas(LocalTime lc1, LocalTime lc2) {
 	return lc1.minusNanos(lc2.toNanoOfDay());
     }
@@ -150,5 +117,40 @@ public class CorridaService {
 	return logs;
 
     }
+    
+    private List<Resultado> processarDados() {
+
+   	List<Resultado> list = new ArrayList<Resultado>();
+
+   	carregarListaDePilotos()
+   		.forEach(piloto -> {
+           	    Resultado resultado = new Resultado();
+           	    resultado.setPiloto(piloto);
+           	    resultado.setNumeroDaMelhorVolta(melhorVoltaPorPiloto(piloto));
+           	    resultado.setQuantidadeVoltasCompletadas(voltasCompletadasPorPiloto(piloto));
+           	    resultado.setTempoTotal(tempoTotalDeProvaPorPiloto(piloto));
+           	    resultado.setVelocidadeMedia(velocidadeMediaPorPiloto(piloto));
+           	    list.add(resultado);
+   		});
+
+   	return list;
+
+       }
+
+       public List<Resultado> gerarResultado() {
+
+   	List<Resultado> resultado = processarDados().stream()
+   		.sorted((p1, p2) -> p1.getTempoTotal().compareTo(p2.getTempoTotal()))
+   		.collect(Collectors.toList());
+
+   	resultado.forEach(p -> {
+   	    p.setDiferencaDeTempoEntreVencedor(
+   		    subtrairDatas(p.getTempoTotal(), resultado.stream()
+   			    .findFirst().get().getTempoTotal()));
+   	});
+
+   	return resultado;
+
+       }
 
 }
